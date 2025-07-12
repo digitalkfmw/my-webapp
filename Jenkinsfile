@@ -8,9 +8,9 @@ pipeline {
     stage('Test')     { steps { sh 'mvn test' } }
     stage('Deploy')   {
       steps {
-        withCredentials([usernamePassword(credentialsId: 'wl-creds', usernameVariable: 'WL_USER', passwordVariable: 'WL_PASS')]) {
-          sh '''
-            java -cp /opt/oracle/wlserver/server/lib/weblogic.jar weblogic.WLST deploy.py $WL_USER $WL_PASS t3://weblogic-host:7001 target/mywebapp.war mywebapp cluster1
+      withCredentials([usernamePassword(credentialsId: 'wl-creds', usernameVariable: 'WL_USER', passwordVariable: 'WL_PASS')]) {
+      sh '''
+      java -cp /opt/oracle/wlserver/server/lib/weblogic.jar weblogic.WLST deploy.py $WL_USER $WL_PASS t3://weblogic-host:7001 target/mywebapp.war mywebapp cluster1
           '''
         }
       }
