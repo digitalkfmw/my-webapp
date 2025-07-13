@@ -2,18 +2,19 @@ pipeline {
     agent any
 
     tools {
-        maven 'M3'     // Replace with your Maven tool name configured in Jenkins
-        jdk 'JDK11'    // Replace with your JDK tool name configured in Jenkins
+        maven 'M3'     // Replace with your Maven tool name in Jenkins
+        jdk 'JDK11'    // Replace with your JDK tool name in Jenkins
     }
 
     environment {
-        WLST_PATH = '/u01/data/middleware/oracle_common/common/bin/wlst.sh'
-        ADMIN_URL = 't3://172.31.41.166:7001'
-        ADMIN_USER = 'weblogic'
-        ADMIN_PASS = 'weblogic123'
-        APP_NAME   = 'mybank'
-        WAR_PATH   = 'target/mybank.war'
-        SCRIPT     = 'deploy.py'
+        WLST_PATH    = '/u01/data/middleware/oracle_common/common/bin/wlst.sh'
+        ADMIN_URL    = 't3://172.31.41.166:7001'
+        ADMIN_USER   = 'weblogic'
+        ADMIN_PASS   = 'weblogic123'
+        APP_NAME     = 'mybank'
+        WAR_PATH     = 'target/mybank.war'
+        CLUSTER_NAME = 'DemoCluster'
+        SCRIPT       = 'deploy.py'
     }
 
     triggers {
@@ -39,17 +40,13 @@ pipeline {
             }
         }
 
-        stage('Deploy to WebLogic') {
+        stage('Deploy to WebLogic Cluster') {
             steps {
-                dir('/u01/jenkins/code') {
-                    sh """
-                    ${WLST_PATH} ${SCRIPT} ${ADMIN_URL} ${ADMIN_USER} ${ADMIN_PASS} ${WAR_PATH} ${APP_NAME}
-                    """
-                }
+                sh """
+                ${WLST_PATH} ${SCRIPT} ${ADMIN_URL} ${ADMIN_USER} ${ADMIN_PASS} ${WAR_PATH} ${APP_NAME} ${CLUSTER_NAME}
+                """
             }
         }
     }
 }
-
-
 
