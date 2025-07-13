@@ -12,7 +12,7 @@ pipeline {
         ADMIN_USER   = 'weblogic'
         ADMIN_PASS   = 'weblogic123'
         APP_NAME     = 'mybank'
-        WAR_PATH     = 'target/mybank.war'
+        WAR_PATH     = 'target/mywebapp.war'
         CLUSTER_NAME = 'DemoCluster'
         SCRIPT       = 'deploy.py'
     }
